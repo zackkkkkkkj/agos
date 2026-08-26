@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projetos — agos dsgn</title>
   
-  <!-- Favicon / Ícone da Aba do Navegador -->
+  <!-- Favicon / Ícone da Aba -->
   <link rel="icon" type="image/png" href="images/Ativo%203.png" />
+  <link rel="shortcut icon" type="image/png" href="images/Ativo%203.png" />
+  <link rel="apple-touch-icon" href="images/Ativo%203.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -252,37 +254,36 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* REGRA DO CELULAR */
+    /* CORREÇÃO PARA CELULAR (FORÇA ORDEM VERTICAL PERFEITA) */
     @media (max-width: 768px) {
       .projects-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
       }
 
       .projects-column {
-        width: 100%;
-        display: contents;
+        display: contents; /* Desfaz o container de colunas no mobile */
       }
 
       .desktop-star {
-        display: none;
+        display: none !important;
       }
 
       .mobile-only-star {
-        display: flex;
+        display: flex !important;
         width: 60px;
         height: 60px;
-        margin: 10px 0;
+        margin: 5px 0;
       }
 
-      /* Sequência no Celular: DAVIPAN -> ESTRELA -> CALIGGIO -> ESTRELA -> STUDIO */
-      .card-davipan { order: 1; }
-      .star-1       { order: 2; }
-      .card-caliggio { order: 3; }
-      .star-2       { order: 4; }
-      .card-studio   { order: 5; }
+      /* Sequência exata: DAVIPAN -> ESTRELA 1 -> CALIGGIO -> ESTRELA 2 -> STUDIO */
+      .card-davipan { order: 1 !important; }
+      .star-1       { order: 2 !important; }
+      .card-caliggio { order: 3 !important; }
+      .star-2       { order: 4 !important; }
+      .card-studio   { order: 5 !important; }
 
       .project-card {
         width: 100%;
@@ -345,24 +346,21 @@
     <!-- WRAPPER DOS CARDS -->
     <div class="projects-wrapper">
       
-      <!-- COLUNA ESQUERDA (DESKTOP) -->
-      <div class="projects-column">
-        <!-- DAVIPAN (Ordem 1 no Celular) -->
-        <div class="project-card card-davipan" onclick="openModal('modalDavipan')">
-          <img src="images/capa_davipan.jpg.png" alt="Capa Jornada Davipan">
-        </div>
+      <!-- DAVIPAN (Ordem 1 no Celular) -->
+      <div class="project-card card-davipan" onclick="openModal('modalDavipan')">
+        <img src="images/capa_davipan.jpg.png" alt="Capa Jornada Davipan">
+      </div>
 
-        <!-- PRIMEIRA ESTRELA DO CELULAR (Ordem 2 no Celular) -->
-        <div class="divider-star mobile-only-star star-1">
-          <svg viewBox="0 0 100 100">
-            <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
-          </svg>
-        </div>
+      <!-- PRIMEIRA ESTRELA DO CELULAR (Ordem 2 no Celular) -->
+      <div class="divider-star mobile-only-star star-1">
+        <svg viewBox="0 0 100 100">
+          <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
+        </svg>
+      </div>
 
-        <!-- STUDIO (Ordem 5 no Celular) -->
-        <div class="project-card card-studio" onclick="openModal('modalStudio')">
-          <img src="images/studio%20capa%20e%20slide%202.PNG" alt="Capa Studio">
-        </div>
+      <!-- CALIGGIO (Ordem 3 no Celular) -->
+      <div class="project-card card-caliggio" onclick="openModal('modalCaliggio')">
+        <img src="images/CAPA%20SITE.png" alt="Capa Caliggio">
       </div>
 
       <!-- ESTRELA DO DESKTOP -->
@@ -372,19 +370,16 @@
         </svg>
       </div>
 
-      <!-- COLUNA DIREITA (DESKTOP) -->
-      <div class="projects-column">
-        <!-- SEGUNDA ESTRELA DO CELULAR (Ordem 4 no Celular) -->
-        <div class="divider-star mobile-only-star star-2">
-          <svg viewBox="0 0 100 100">
-            <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
-          </svg>
-        </div>
+      <!-- SEGUNDA ESTRELA DO CELULAR (Ordem 4 no Celular) -->
+      <div class="divider-star mobile-only-star star-2">
+        <svg viewBox="0 0 100 100">
+          <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
+        </svg>
+      </div>
 
-        <!-- CALIGGIO (Ordem 3 no Celular) -->
-        <div class="project-card card-caliggio" onclick="openModal('modalCaliggio')">
-          <img src="images/CAPA%20SITE.png" alt="Capa Caliggio">
-        </div>
+      <!-- STUDIO (Ordem 5 no Celular) -->
+      <div class="project-card card-studio" onclick="openModal('modalStudio')">
+        <img src="images/studio%20capa%20e%20slide%202.PNG" alt="Capa Studio">
       </div>
 
     </div>
