@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projetos — agos dsgn</title>
   
+  <!-- Favicon / Ícone da Aba do Navegador -->
+  <link rel="icon" type="image/png" href="images/Ativo%203.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
@@ -111,7 +114,7 @@
       opacity: 0.7;
     }
 
-    /* Layout dos Projetos */
+    /* Layout Desktop */
     .projects-wrapper {
       display: flex;
       align-items: flex-start;
@@ -138,7 +141,6 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* Trava o tamanho idêntico e recorta a imagem para não deformar */
     .project-card img {
       width: 100%;
       height: 100%;
@@ -148,15 +150,22 @@
       transition: filter 0.4s ease, transform 0.4s ease;
     }
 
-    /* Estrela Divisora Alinhada ao Topo */
+    /* Estrelas */
     .divider-star {
       width: 90px;
       height: 90px;
-      margin-top: 95px; /* Centraliza a estrela verticalmente em relação ao Davipan/Caliggio */
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .desktop-star {
+      margin-top: 95px; /* Alinhada no meio do Davipan e Caliggio no Desktop */
+    }
+
+    .mobile-only-star {
+      display: none; /* Escondida no desktop */
     }
 
     .divider-star svg {
@@ -165,7 +174,6 @@
       fill: #572c19;
     }
 
-    /* Efeito ao passar o mouse */
     .project-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(22, 10, 5, 0.12);
@@ -175,7 +183,7 @@
       filter: grayscale(0%);
     }
 
-    /* Modal / Pop-up do Projeto */
+    /* Modal / Pop-up */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -183,7 +191,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(22, 10, 5, 0.85); /* Dark Brown com opacidade */
+      background-color: rgba(22, 10, 5, 0.85);
       z-index: 1000;
       align-items: center;
       justify-content: center;
@@ -205,7 +213,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    /* Imagens internas do modal coloridas e em tamanho normal */
     .modal-content img {
       width: 100%;
       height: auto;
@@ -225,7 +232,6 @@
       border-radius: 10px;
     }
 
-    /* Botão de Fechar */
     .close-btn {
       position: fixed;
       top: 20px;
@@ -246,10 +252,43 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
+    /* REGRA DO CELULAR */
     @media (max-width: 768px) {
-      .projects-wrapper { flex-direction: column; gap: 20px; }
-      .project-card { width: 100%; height: 220px; }
-      .divider-star { transform: rotate(90deg); margin: 10px 0; width: 60px; height: 60px; }
+      .projects-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .projects-column {
+        width: 100%;
+        display: contents;
+      }
+
+      .desktop-star {
+        display: none;
+      }
+
+      .mobile-only-star {
+        display: flex;
+        width: 60px;
+        height: 60px;
+        margin: 10px 0;
+      }
+
+      /* Sequência no Celular: DAVIPAN -> ESTRELA -> CALIGGIO -> ESTRELA -> STUDIO */
+      .card-davipan { order: 1; }
+      .star-1       { order: 2; }
+      .card-caliggio { order: 3; }
+      .star-2       { order: 4; }
+      .card-studio   { order: 5; }
+
+      .project-card {
+        width: 100%;
+        height: 220px;
+      }
+
       .close-btn { top: 15px; right: 15px; width: 38px; height: 38px; }
       .modal-content { max-height: 85vh; }
       .back-link { font-size: 1.3rem; }
@@ -306,30 +345,44 @@
     <!-- WRAPPER DOS CARDS -->
     <div class="projects-wrapper">
       
-      <!-- COLUNA DA ESQUERDA (Davipan em cima + Studio embaixo) -->
+      <!-- COLUNA ESQUERDA (DESKTOP) -->
       <div class="projects-column">
-        <!-- PROJETO 1: DAVIPAN -->
-        <div class="project-card" onclick="openModal('modalDavipan')">
+        <!-- DAVIPAN (Ordem 1 no Celular) -->
+        <div class="project-card card-davipan" onclick="openModal('modalDavipan')">
           <img src="images/capa_davipan.jpg.png" alt="Capa Jornada Davipan">
         </div>
 
-        <!-- PROJETO 3: STUDIO -->
-        <div class="project-card" onclick="openModal('modalStudio')">
+        <!-- PRIMEIRA ESTRELA DO CELULAR (Ordem 2 no Celular) -->
+        <div class="divider-star mobile-only-star star-1">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
+          </svg>
+        </div>
+
+        <!-- STUDIO (Ordem 5 no Celular) -->
+        <div class="project-card card-studio" onclick="openModal('modalStudio')">
           <img src="images/studio%20capa%20e%20slide%202.PNG" alt="Capa Studio">
         </div>
       </div>
 
-      <!-- ESTRELA NO MEIO (Alinhada entre Davipan e Caliggio) -->
-      <div class="divider-star">
+      <!-- ESTRELA DO DESKTOP -->
+      <div class="divider-star desktop-star">
         <svg viewBox="0 0 100 100">
           <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
         </svg>
       </div>
 
-      <!-- COLUNA DA DIREITA (Caliggio na altura do Davipan) -->
+      <!-- COLUNA DIREITA (DESKTOP) -->
       <div class="projects-column">
-        <!-- PROJETO 2: CALIGGIO -->
-        <div class="project-card" onclick="openModal('modalCaliggio')">
+        <!-- SEGUNDA ESTRELA DO CELULAR (Ordem 4 no Celular) -->
+        <div class="divider-star mobile-only-star star-2">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
+          </svg>
+        </div>
+
+        <!-- CALIGGIO (Ordem 3 no Celular) -->
+        <div class="project-card card-caliggio" onclick="openModal('modalCaliggio')">
           <img src="images/CAPA%20SITE.png" alt="Capa Caliggio">
         </div>
       </div>
