@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>projetos - agos dsgn</title>
+  <title>Projetos — agos dsgn</title>
   
-  <!-- FAVICON -->
-  <link rel="icon" type="image/png" href="images/Ativo%203.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&family=Alex+Brush&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -26,54 +23,46 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
-      min-height: 100vh;
     }
 
-    /* Container de Estrelas Arrastáveis */
+    /* Container das Estrelas Flutuantes (#98cdeb) */
     #stars-container {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 0;
       overflow: hidden;
     }
 
-    /* Estrelas Azuis Arrastáveis */
-    .draggable-star {
+    .star {
       position: absolute;
       color: #98cdeb; /* Baby Blue */
       user-select: none;
-      -webkit-user-select: none;
-      cursor: grab;
-      pointer-events: auto;
-      touch-action: none;
-      transition: color 0.2s ease, transform 0.1s ease;
-      z-index: 9999;
+      animation: floatStar 4s ease-in-out infinite alternate, fadeStar 3s ease-in-out infinite alternate;
     }
 
-    .draggable-star:hover {
-      color: #572c19;
+    @keyframes floatStar {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-18px) rotate(25deg); }
     }
 
-    .draggable-star.dragging {
-      cursor: grabbing;
-      color: #572c19;
-      transform: scale(1.4);
-      z-index: 100000 !important;
+    @keyframes fadeStar {
+      0% { opacity: 0.3; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.3); }
     }
 
     /* Faixa Superior Infinita (#98cdeb) */
     .top-ticker {
-      background-color: #98cdeb;
+      background-color: #98cdeb; /* Baby Blue */
       overflow: hidden;
       white-space: nowrap;
       padding: 6px 0;
       width: 100%;
       position: relative;
-      z-index: 200;
+      z-index: 2;
     }
 
     .ticker-track {
@@ -90,7 +79,7 @@
       font-weight: 500;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #160a05;
+      color: #160a05; /* Dark Brown */
     }
 
     @keyframes marquee {
@@ -98,220 +87,173 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* Cabecalho da pagina de Projetos */
-    .header-bar {
-      max-width: 1100px;
+    /* Container Principal */
+    .container {
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 30px 20px 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 30px 20px 60px 20px;
       position: relative;
-      z-index: 20;
+      z-index: 2;
     }
 
-    .back-home {
-      display: flex;
-      align-items: center;
+    /* Link "voltar para o início" */
+    .back-link {
+      display: inline-block;
+      color: #572c19; /* Brown Sugar */
       text-decoration: none;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .back-home img {
-      width: 140px;
-      height: auto;
-      display: block;
-    }
-
-    .back-home:hover {
-      transform: scale(1.05);
-      opacity: 0.85;
-    }
-
-    .social-bar {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .social-bar a {
-      color: #572c19;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
+      font-family: 'Blackadder ITC', 'Alex Brush', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
       transition: opacity 0.2s;
     }
 
-    .social-bar a:hover {
+    .back-link:hover {
       opacity: 0.7;
     }
 
-    .social-bar svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
-
-    .btn-budget {
+    /* Layout dos Projetos com Estrela ao Centro */
+    .projects-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: 1px solid #572c19;
-      padding: 6px 16px;
-      border-radius: 20px;
-      line-height: 1;
-    }
-
-    .btn-budget svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* Titulo Projetos com Estrela Central */
-    .page-title-section {
-      text-align: center;
-      margin: 30px 0 40px 0;
-      position: relative;
-      z-index: 20;
-    }
-
-    .page-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: lowercase;
-      color: #572c19;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .center-star {
-      color: #572c19;
-      font-size: 2.5rem;
-      line-height: 1;
-    }
-
-    /* Grid de Projetos */
-    .projects-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px 80px 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-      position: relative;
-      z-index: 20;
+      justify-content: center;
+      gap: 35px;
+      width: 100%;
     }
 
     .project-card {
-      border-radius: 12px;
+      flex: 1;
+      height: 280px; /* Altura idêntica para os dois */
+      background-color: #ffffff;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 4px 15px rgba(22, 10, 5, 0.05);
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      background-color: transparent;
     }
 
+    /* Trava o tamanho idêntico e recorta a imagem para não deformar */
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    /* Estrela Divisora Maior */
+    .divider-star {
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .divider-star svg {
+      width: 100%;
+      height: 100%;
+      fill: #572c19;
+    }
+
+    /* Efeito ao passar o mouse */
     .project-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(22, 10, 5, 0.12);
     }
 
-    .project-thumb {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      object-fit: contain;
+    .project-card:hover img {
+      filter: grayscale(0%);
     }
 
-    /* MODAL DE GALERIA / SLIDES */
-    .modal {
+    /* Modal / Pop-up do Projeto */
+    .modal-overlay {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(22, 10, 5, 0.85);
-      z-index: 200000;
-      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(22, 10, 5, 0.85); /* Dark Brown com opacidade */
+      z-index: 1000;
       align-items: center;
+      justify-content: center;
       padding: 20px;
     }
 
-    .modal.active {
+    .modal-overlay.active {
       display: flex;
     }
 
     .modal-content {
       position: relative;
-      max-width: 900px;
+      max-width: 850px;
       width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Imagens internas do modal coloridas e em tamanho normal */
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: none;
+    }
+
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .modal-content::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 0 12px 12px 0;
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+      background: #572c19;
+      border-radius: 10px;
+    }
+
+    /* Botão de Fechar */
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      background: #ffffff;
+      color: #572c19;
+      border: none;
+      font-size: 1.5rem;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1001;
+      font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    .modal-img {
-      max-width: 100%;
-      max-height: 85vh;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      color: #ededed;
-      font-size: 2rem;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      border: none;
-      font-size: 1.8rem;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 50%;
-      transition: background 0.2s ease;
-      user-select: none;
-    }
-
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .prev-btn { left: -60px; }
-    .next-btn { right: -60px; }
-
-    @media (max-width: 850px) {
-      .header-bar {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .prev-btn { left: 10px; }
-      .next-btn { right: 10px; }
+    @media (max-width: 768px) {
+      .projects-wrapper { flex-direction: column; gap: 20px; }
+      .project-card { width: 100%; height: 220px; }
+      .divider-star { transform: rotate(90deg); margin: 10px 0; width: 60px; height: 60px; }
+      .close-btn { top: 15px; right: 15px; width: 38px; height: 38px; }
+      .modal-content { max-height: 85vh; }
+      .back-link { font-size: 1.3rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ESTRELAS FLUTUANTES NO FUNDO (#98cdeb) -->
   <div id="stars-container"></div>
 
+  <!-- Faixa Superior Infinita (#98cdeb) -->
   <div class="top-ticker">
     <div class="ticker-track">
       <div class="ticker-content">
@@ -323,6 +265,10 @@
         <span>AGOS DSGN &#10022;</span>
         <span>AGOS DSGN &#10022;</span>
         <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
       </div>
       <div class="ticker-content">
         <span>AGOS DSGN &#10022;</span>
@@ -333,202 +279,113 @@
         <span>AGOS DSGN &#10022;</span>
         <span>AGOS DSGN &#10022;</span>
         <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
+        <span>AGOS DSGN &#10022;</span>
       </div>
     </div>
   </div>
 
-  <header class="header-bar">
-    <a href="index.html" class="back-home">
-      <img src="images/Ativo%206.png" alt="agos dsgn">
-    </a>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; voltar para o início</a>
 
-    <nav class="social-bar">
-      <a href="https://www.instagram.com/agosdsgn" target="_blank" rel="noopener" title="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      </a>
-
-      <a href="mailto:agos.studiocriativo@gmail.com" title="E-mail">
-        <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
-      </a>
-
-      <a href="https://wa.me/5541920031627?text=Ol%C3%A1%2C%20tudo%20bem%3F%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20seus%20trabalhos%21" target="_blank" rel="noopener" class="btn-budget">
-        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-        <span>Entre em contato</span>
-      </a>
-    </nav>
-  </header>
-
-  <section class="page-title-section">
-    <h1 class="page-title">
-      pro<span class="center-star">✦</span>jetos
-    </h1>
-  </section>
-
-  <main class="projects-container">
-    <!-- Projeto Studio (com Slides) -->
-    <div class="project-card" onclick="openGallery(0)">
-      <img src="images/studio%20capa%20e%20slide%202.PNG" alt="Studio Project" class="project-thumb">
+    <!-- Título da página -->
+    <div style="margin-bottom: 25px;">
+      <img src="images/Ativo%2012.png" alt="projetos" style="width: 200px; height: auto;">
     </div>
 
-    <!-- Projeto 1 -->
-    <div class="project-card" onclick="openGallery(1)">
-      <img src="images/Ativo%2014.png" alt="Projeto 1" class="project-thumb">
-    </div>
+    <!-- WRAPPER DOS CARDS COM ESTRELA CENTRAL -->
+    <div class="projects-wrapper">
+      
+      <!-- PROJETO 1: DAVIPAN -->
+      <div class="project-card" onclick="openModal('modalDavipan')">
+        <img src="images/capa_davipan.jpg.png" alt="Capa Jornada Davipan">
+      </div>
 
-    <!-- Projeto 2 -->
-    <div class="project-card" onclick="openGallery(2)">
-      <img src="images/Ativo%2015.png" alt="Projeto 2" class="project-thumb">
-    </div>
+      <!-- ESTRELA NO MEIO (AUMENTADA) -->
+      <div class="divider-star">
+        <svg viewBox="0 0 100 100">
+          <path d="M50 0 L55 35 L90 10 L65 45 L100 50 L65 55 L90 90 L55 65 L50 100 L45 65 L10 90 L35 55 L0 50 L35 45 L10 10 L45 35 Z"/>
+        </svg>
+      </div>
 
-    <!-- Projeto 3 -->
-    <div class="project-card" onclick="openGallery(3)">
-      <img src="images/Ativo%2016.png" alt="Projeto 3" class="project-thumb">
-    </div>
+      <!-- PROJETO 2: CALIGGIO -->
+      <div class="project-card" onclick="openModal('modalCaliggio')">
+        <img src="images/CAPA%20SITE.png" alt="Capa Caliggio">
+      </div>
 
-    <!-- Projeto 4 -->
-    <div class="project-card" onclick="openGallery(4)">
-      <img src="images/Ativo%2017.png" alt="Projeto 4" class="project-thumb">
     </div>
+  </div>
 
-    <!-- Projeto 5 -->
-    <div class="project-card" onclick="openGallery(5)">
-      <img src="images/Ativo%2018.png" alt="Projeto 5" class="project-thumb">
-    </div>
-  </main>
-
-  <!-- Modal do Carrossel de Imagens -->
-  <div class="modal" id="galleryModal">
+  <!-- MODAL PROJETO 1: DAVIPAN -->
+  <div class="modal-overlay" id="modalDavipan" onclick="closeModalOnOuterClick(event, 'modalDavipan')">
+    <button class="close-btn" onclick="closeModal('modalDavipan')">&times;</button>
     <div class="modal-content">
-      <button class="close-btn" onclick="closeGallery()">&times;</button>
-      <button class="nav-btn prev-btn" id="prevBtn" onclick="changeSlide(-1)">&#10094;</button>
-      <img src="" alt="Projeto" id="modalImage" class="modal-img">
-      <button class="nav-btn next-btn" id="nextBtn" onclick="changeSlide(1)">&#10095;</button>
+      <img src="images/capa_davipan.jpg.png" alt="Capa Davipan">
+      <img src="images/foto2.jpg.png" alt="Davipan - Foto 2">
+      <img src="images/foto3.jpg.png" alt="Davipan - Foto 3">
+      <img src="images/foto4.jpg.png" alt="Davipan - Foto 4">
+      <img src="images/foto5.jpg.png" alt="Davipan - Foto 5">
+      <img src="images/foto6.jpg.png" alt="Davipan - Foto 6">
+      <img src="images/foto7.jpg.png" alt="Davipan - Foto 7">
+      <img src="images/foto8.jpg.png" alt="Davipan - Foto 8">
+      <img src="images/foto9.jpg.png" alt="Davipan - Foto 9">
+      <img src="images/foto10.jpg.png" alt="Davipan - Foto 10">
+      <img src="images/fot11.jpg.png" alt="Davipan - Foto 11">
+      <img src="images/foto12.jpg.png" alt="Davipan - Foto 12">
+    </div>
+  </div>
+
+  <!-- MODAL PROJETO 2: CALIGGIO -->
+  <div class="modal-overlay" id="modalCaliggio" onclick="closeModalOnOuterClick(event, 'modalCaliggio')">
+    <button class="close-btn" onclick="closeModal('modalCaliggio')">&times;</button>
+    <div class="modal-content">
+      <img src="images/1.png" alt="Caliggio - Foto 1">
+      <img src="images/2.png" alt="Caliggio - Foto 2">
+      <img src="images/3.png" alt="Caliggio - Foto 3">
+      <img src="images/4.png" alt="Caliggio - Foto 4">
+      <img src="images/5.png" alt="Caliggio - Foto 5">
+      <img src="images/6.png" alt="Caliggio - Foto 6">
+      <img src="images/7.png" alt="Caliggio - Foto 7">
+      <img src="images/8.png" alt="Caliggio - Foto 8">
+      <img src="images/9.png" alt="Caliggio - Foto 9">
+      <img src="images/10.png" alt="Caliggio - Foto 10">
+      <img src="images/11.png" alt="Caliggio - Foto 11">
     </div>
   </div>
 
   <script>
-    /* Estrelas Arrastáveis */
+    // Gerador de Estrelas na cor #98cdeb
     const container = document.getElementById('stars-container');
     const starIcons = ['✦', '✧', '✶', '✵'];
-    
-    function makeDraggable(el) {
-      let isDragging = false;
-      let startX, startY, startLeft, startTop;
 
-      el.addEventListener('pointerdown', (e) => {
-        isDragging = true;
-        el.classList.add('dragging');
-
-        startX = e.clientX;
-        startY = e.clientY;
-
-        const rect = el.getBoundingClientRect();
-        startLeft = rect.left + window.scrollX;
-        startTop = rect.top + window.scrollY;
-
-        el.style.left = startLeft + 'px';
-        el.style.top = startTop + 'px';
-
-        el.setPointerCapture(e.pointerId);
-      });
-
-      el.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-
-        const deltaX = e.clientX - startX;
-        const deltaY = e.clientY - startY;
-
-        el.style.left = (startLeft + deltaX) + 'px';
-        el.style.top = (startTop + deltaY) + 'px';
-      });
-
-      const stopDrag = (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        el.classList.remove('dragging');
-
-        try {
-          el.releasePointerCapture(e.pointerId);
-        } catch (err) {}
-      };
-
-      el.addEventListener('pointerup', stopDrag);
-      el.addEventListener('pointercancel', stopDrag);
-    }
-
-    const isMobile = window.innerWidth <= 850;
-    const totalStars = isMobile ? 15 : 30;
-
-    for (let i = 0; i < totalStars; i++) {
+    for (let i = 0; i < 30; i++) {
       const star = document.createElement('span');
-      star.className = 'draggable-star';
+      star.className = 'star';
       star.innerHTML = starIcons[Math.floor(Math.random() * starIcons.length)];
-      
-      const initialX = Math.random() * (window.innerWidth - 60);
-      const initialY = Math.random() * (document.body.scrollHeight - 60);
-      
-      star.style.left = initialX + 'px';
-      star.style.top = initialY + 'px';
-      star.style.fontSize = (Math.random() * 18 + 18) + 'px';
-
-      makeDraggable(star);
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.fontSize = (Math.random() * 14 + 12) + 'px';
+      star.style.animationDelay = (Math.random() * 4) + 's';
+      star.style.animationDuration = (Math.random() * 3 + 3) + 's';
       container.appendChild(star);
     }
 
-    /* Dados dos Projetos */
-    const projectsData = [
-      {
-        // Projeto Studio com múltiplos slides
-        images: [
-          'images/studio%201.PNG',
-          'images/studio%20capa%20e%20slide%202.PNG',
-          'images/studio%203.png',
-          'images/studio%204.png'
-        ]
-      },
-      { images: ['images/Ativo%2014.png'] },
-      { images: ['images/Ativo%2015.png'] },
-      { images: ['images/Ativo%2016.png'] },
-      { images: ['images/Ativo%2017.png'] },
-      { images: ['images/Ativo%2018.png'] }
-    ];
-
-    let currentProjectIndex = 0;
-    let currentSlideIndex = 0;
-
-    function openGallery(projectIndex) {
-      currentProjectIndex = projectIndex;
-      currentSlideIndex = 0;
-      updateModalImage();
-      document.getElementById('galleryModal').classList.add('active');
+    // Modal com ID dinâmico
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
-    function closeGallery() {
-      document.getElementById('galleryModal').classList.remove('active');
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = 'auto';
     }
 
-    function changeSlide(direction) {
-      const slides = projectsData[currentProjectIndex].images;
-      if (slides.length <= 1) return;
-      currentSlideIndex = (currentSlideIndex + direction + slides.length) % slides.length;
-      updateModalImage();
-    }
-
-    function updateModalImage() {
-      const slides = projectsData[currentProjectIndex].images;
-      const img = document.getElementById('modalImage');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-
-      img.src = slides[currentSlideIndex];
-
-      // Oculta as setas se o projeto só tiver 1 imagem
-      if (slides.length <= 1) {
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-      } else {
-        prevBtn.style.display = 'block';
-        nextBtn.style.display = 'block';
+    function closeModalOnOuterClick(event, id) {
+      if (event.target.classList.contains('modal-overlay')) {
+        closeModal(id);
       }
     }
   </script>
